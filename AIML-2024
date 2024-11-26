@@ -1,0 +1,585 @@
+//Write a program to implement BFS and DFS Traversal.
+//WEEK-1
+
+from collections import defaultdict
+class Graph():
+ def __init__(self):
+self.value = defaultdict(list)
+ def addConnection(self, parent, child):
+self.value[parent].append(child)
+ def DFS(self, start):
+ visited = [start]
+ stack = [start]
+print(start, end = " ")
+ while stack:
+ s = stack[-1]
+ if any([item for item in self.value[s] if item not in visited]):
+ for item in [item for item in self.value[s] if item not in visited]:
+stack.append(item)
+visited.append(item)
+print(item, end= " ")
+ break
+ else:
+stack.pop()
+ def BFS(self, start):
+ visited = [start]
+ queue = [start]
+ while queue:
+ x = queue.pop(0)
+print(x, end= " ")
+ for item in self.value[x]:
+ if item not in visited:
+queue.append(item)
+visited.append(item)
+#Build the graph
+g=Graph()
+g.addConnection(1,4)
+g.addConnection(1,2)
+g.addConnection(2,3)
+g.addConnection(2,6)
+g.addConnection(4,5)
+g.addConnection(4,7)
+g.addConnection(7,96)
+#Explore the graph
+g.DFS(1)
+print("\n")
+g.BFS(1)
+              
+// (Week-3) AIM:Write a program to implement Travelling Salesman Problem and Graph Coloring Problem.
+
+SOURCE CODE- Travelling saleman problem
+from sys import maxsize
+from itertools import permutations
+V = 4
+# implementation of traveling Salesman Problem 
+def travellingSalesmanProblem(graph, s): 
+# store all vertex apart from source vertex 
+vertex = [] 
+for i in range(V): 
+if i != s: 
+vertex.append(i) 
+# store minimum weight Hamiltonian Cycle 
+min_path = maxsize
+next_permutation=permutations(vertex)
+for i in next_permutation:
+# store current Path weight(cost) 
+current_pathweight = 0
+# compute current path weight 
+k = s 
+for j in i: 
+current_pathweight += graph[k][j] 
+k = j 
+current_pathweight += graph[k][s] 
+# update minimum 
+min_path = min(min_path, current_pathweight) 
+return min_path
+# Driver Code 
+if __name__ == "__main__": 
+# matrix representation of graph 
+graph = [[0, 10, 15, 20], [10, 0, 35, 25], 
+[15, 35, 0, 30], [20, 25, 30, 0]] 
+s = 0
+print(travellingSalesmanProblem(graph, s))
+
+              
+// Graph Coloring
+#!/usr/bin/env python
+# coding: utf-8
+# In[6]:
+colors = ['Red', 'Blue', 'Green', 'Yellow', 'Black']
+states = ['Andhra', 'Karnataka', 'TamilNadu', 'Kerala']
+neighbors = {}
+neighbors['Andhra'] = ['Karnataka', 'TamilNadu']
+neighbors['Karnataka'] = ['Andhra', 'TamilNadu', 'Kerala']
+neighbors['TamilNadu'] = ['Andhra', 'Karnataka', 'Kerala']
+neighbors['Kerala'] = ['Karnataka', 'TamilNadu']
+colors_of_states = {}
+def promising(state, color):
+for neighbor in neighbors.get(state):
+color_of_neighbor = colors_of_states.get(neighbor)
+if color_of_neighbor == color:
+return False
+return True
+def get_color_for_state(state):
+for color in colors:
+if promising(state, color):
+return color
+def main():
+for state in states:
+colors_of_states[state] = get_color_for_state(state)
+print (colors_of_states)
+main()
+# In[ ]:
+# In[ ]
+
+AIM :Write a program to implement Knowledge Representation.(week-4)
+
+# Here we import everything from logic.py
+from logic import * 
+rain = Symbol("rain") # Rain is the symbol for rain
+hagrid = Symbol("hagrid") 
+dumbledore = Symbol("dumpledore")
+# we create here a logical sentence using logical connectives
+logical_sentence = And(rain, hagrid) 
+# we can't directly print the logical sentence so we use a formula function
+print(logical_sentence.formula()) 
+# we create a implication logic here
+implication_logic = Implication(Not(rain), hagrid) 
+print(implication_logic.formula())
+'''"We make decision from knowledge base " ,all of the statement will be true then knowlegde base will be true'''
+knowledge_base = And(
+Implication(Not(rain), hagrid),
+Or(hagrid, dumbledore),
+Not(And(hagrid, dumbledore)),
+hagrid
+)
+print(knowledge_base.formula())
+''' Here we use the model_check function and here two arguments are knoledge_base and another is it rain today or 
+not. Then we print it'''
+print(model_check(knowledge_base, rain)) 
+// OUTPUT:
+Rain ^ hagrid
+(¬ rain =>hagrid
+((¬ rain) =>hagrid ^ (hagrid v dumledore) ^ (¬(hagrid ^ dumbledore)) ^ dumbledore
+true
+
+ //AIM:Write a program to implement Bayesian Network.(Week 5)
+
+ import numpy
+from pomegranate import * 
+guest = DiscreteDistribution({'A': 1./3, 'B': 1./3, 'C': 1./3})
+prize = DiscreteDistribution({'A': 1./3, 'B': 1./3, 'C': 1./3})
+monty = ConditionalProbabilityTable(
+[[ 'A', 'A', 'A', 0.0 ],
+[ 'A', 'A', 'B', 0.5 ],
+[ 'A', 'A', 'C', 0.5 ],
+[ 'A', 'B', 'A', 0.0 ],
+[ 'A', 'B', 'B', 0.0 ],
+[ 'A', 'B', 'C', 1.0 ],
+[ 'A', 'C', 'A', 0.0 ],
+[ 'A', 'C', 'B', 1.0 ],
+[ 'A', 'C', 'C', 0.0 ],
+[ 'B', 'A', 'A', 0.0 ],
+[ 'B', 'A', 'B', 0.0 ],
+[ 'B', 'A', 'C', 1.0 ],
+[ 'B', 'B', 'A', 0.5 ],
+[ 'B', 'B', 'B', 0.0 ],
+[ 'B', 'B', 'C', 0.5 ],
+[ 'B', 'C', 'A', 1.0 ],
+[ 'B', 'C', 'B', 0.0 ],
+[ 'B', 'C', 'C', 0.0 ],
+[ 'C', 'A', 'A', 0.0 ],
+[ 'C', 'A', 'B', 1.0 ],
+[ 'C', 'A', 'C', 0.0 ],
+[ 'C', 'B', 'A', 1.0 ],
+[ 'C', 'B', 'B', 0.0 ],
+[ 'C', 'B', 'C', 0.0 ],
+[ 'C', 'C', 'A', 0.5 ],
+[ 'C', 'C', 'B', 0.5 ],
+[ 'C', 'C', 'C', 0.0 ]], [guest, prize])
+s1 = State(guest, name="guest") 
+s2 = State(prize, name="prize") 
+s3 = State(monty, name="monty")
+model = BayesianNetwork("Monty Hall Problem")
+model.add_states(s1, s2, s3)
+model.add_edge(s1, s3) 
+model.add_edge(s2, s3)
+model.bake()
+print(model.probability([['A', 'B', 'C'],['A','A','C'],['A','C','C']]))
+print(model.predict([['A',None,'C'],['A','A',None],[None,'B','A']]))
+
+AIM :Write a program to implement Hidden Markov Model.(WEEK-6)
+
+import numpy as np
+import itertools
+import pandas as pd
+# create state space and initial state probabilities
+states = ['sleeping', 'eating', 'pooping']
+hidden_states = ['healthy', 'sick']
+pi = [0.5, 0.5]
+state_space = pd.Series(pi, index=hidden_states, name='states')
+print(state_space)
+a_df = pd.DataFrame(columns=hidden_states, index=hidden_states)
+a_df.loc[hidden_states[0]] = [0.7, 0.3]
+a_df.loc[hidden_states[1]] = [0.4, 0.6]
+print(a_df)
+observable_states = states
+b_df = pd.DataFrame(columns=observable_states, index=hidden_states)
+b_df.loc[hidden_states[0]] = [0.2, 0.6, 0.2]
+b_df.loc[hidden_states[1]] = [0.4, 0.1, 0.5]
+print(b_df)
+def HMM(obsq,a_df,b_df,pi,states,hidden_states):
+hidst=list(itertools.product(hidden_states,repeat=len(obsq)))
+print(hidst)
+sum=0
+for k in hidst:
+prod=1
+for j in range(len(k)):
+c=0
+for i in obsq:
+if c==0:
+prod*=a_df[i][k[j]]*pi[hidden_states.index(k[j])]
+c=1
+else:
+prod*=b_df[k[j]][k[j-1]]*a_df[i][k[j]]
+sum+=prod
+c=0
+return sum
+def vertibi(obsq,a_df,b_df,pi,states,hidden_states):
+sum=0
+hidst=list(itertools.product(hidden_states,repeat=len(obsq)))
+for k in hidst:
+sum1=0
+prod=1
+for j in range(len(k)):
+c=0
+for i in obsq:
+if c==0:
+prod*=a_df[i][k[j]]*pi[hidden_states.index(k[j])]
+c=1
+else:
+prod*=b_df[k[j]][k[j-1]]*a_df[i][k[j]]
+c=0
+sum1+=prod
+if(sum1>sum):
+sum=sum1
+hs=k
+return sum,hs
+obsq=['pooping','pooping','pooping']
+print(HMM(obsq,b_df,a_df,pi,states,hidden_states))
+print(vertibi(obsq,b_df,a_df,pi,states,hidden_states))
+OUTPUT:
+healthy 0.5
+sick 0.5
+Name: states, dtype: float64
+ healthy sick
+healthy 0.7 0.3
+sick 0.4 0.6
+ sleeping eating pooping
+healthy 0.2 0.6 0.2
+sick 0.4 0.1 0.5
+[('healthy', 'healthy', 'healthy'), ('healthy', 'healthy', 'sick'), ('healthy', 'sick', 'healthy'), ('healthy', 'sick', 'sick'), ('sick', 
+'healthy', 'healthy'), ('sick', 'healthy', 'sick'), ('sick', 'sick', 'healthy'), ('sick', 'sick', 'sick')]
+1.1662322536e-05
+(1.1390624999999999e-05, ('sick', 'sick', 'sick'))
+
+AIM :Write a program to implement Regression algorithm (  WEEK-7)
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+dataset = pd.read_csv('Salary_Data.csv')
+dataset.head()
+# data preprocessing
+X = dataset.iloc[:, :-1].values #independent variable array
+y = dataset.iloc[:,1].values #dependent variable vector
+# splitting the dataset
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=1/3,random_state=0)
+# fitting the regression model
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train,y_train) #actually produces the linear eqn for the data
+# predicting the test set results
+y_pred = regressor.predict(X_test)
+y_pred
+y_test
+# visualizing the results
+#plot for the TRAIN
+plt.scatter(X_train, y_train, color='red') # plotting the observation line
+plt.plot(X_train, regressor.predict(X_train), color='blue') # plotting the regression line
+plt.title("Salary vs Experience (Training set)") # stating the title of the graph
+plt.xlabel("Years of experience") # adding the name of x-axis
+plt.ylabel("Salaries") # adding the name of y-axis
+plt.show() # specifies end of graph
+#plot for the TEST
+plt.scatter(X_test, y_test, color='red') 
+plt.plot(X_train, regressor.predict(X_train), color='blue') # plotting the regression line
+plt.title("Salary vs Experience (Testing set)")
+plt.xlabel("Years of experience") 
+plt.ylabel("Salaries") 
+plt.show()
+
+AIM:ImplementtheKmeansclustering Algorithms(WEEK-8)
+
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.cluster import KMeans
+import sklearn.metrics as sm
+import pandas as pd
+import numpy as np
+iris =datasets.load_iris()
+X=pd.DataFrame(iris.data)
+X.columns=['Sepal_Length','Sepal_Width', 'Petal_length', 'Petal_Width']
+y=pd.DataFrame(iris.target)
+y.columns=['target']
+plt.figure(figsize=(14,7))
+colormap=np.array(['red','lime','black'])
+plt.subplot(1,2,1)
+plt.scatter(X.Sepal_Length,X.Sepal_Width,c=colormap[y.target],s=40)
+plt.title('Sepal')
+plt.subplot(1,2,2)
+plt.scatter(X.Petal_length,X.Petal_Width,c=colormap[y.target],s=40)
+plt.title('Petal')
+model=KMeans(n_clusters=3)
+model.fit(X)
+print(model.labels_)
+plt.subplot(1,2,1)
+plt.scatter(X.Petal_length,X.Petal_Width,c=colormap[y.target],s=40)
+plt.title('Real Classification')
+plt.subplot(1,2,2)
+plt.scatter(X.Petal_length,X.Petal_Width,c=colormap[model.labels_],s=40)
+plt.title( 'KMEANS Classfication')
+
+AIM:Write a program to implement k-NearestNeighboralgorithm to classify their is dataset. (WEEK - 10)
+
+import sklearn
+import pandas as pd
+from sklearn.datasets import load_iris
+iris=load_iris()
+print(iris.keys())
+df=pd.DataFrame(iris['data'])
+print(df)
+print(iris['target_names'])
+print(iris['feature_names'])
+print(iris['target'])
+X=df
+y=iris['target']
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.33,random_state=42)
+from sklearn.neighbors import KNeighborsClassifier
+knn=KNeighborsClassifier(n_neighbors=3)
+knn.fit(X_train,y_train)
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report
+y_pred=knn.predict(X_test)
+cm=confusion_matrix(y_test,y_pred)
+print(cm)
+print("Correct prediction", accuracy_score(y_test,y_pred))
+print("Wrong prediction", (1-accuracy_score(y_test,y_pred)))
+y_testtrain=knn.predict(X_train)
+cm1=confusion_matrix(y_train,y_testtrain)
+print(cm1)
+
+AIM: Implementing Backpropagation algorithm and test the same using appropriate datasets. (WEEK-11)
+
+importnumpyas np
+x=np.array(([2,9],[1,5],[3,6]),dtype=float)print (x)
+y=np.array(([92],[86],[89]),dtype=float)
+#Normalization of 
+datasetx=x/np.max(x,axis=0
+)
+y=y/100
+print(x)
+print(y)
+defsigmoid(x):
+return(1/(1+np.exp(-x)))
+def 
+derivatives_sigmoid(x):return
+nx*(1-x)
+epoch=10
+00lr=0.01
+input_layer_neurons=2hi
+dden_layer_neurons=2o
+utput_neurons=1
+wh=np.random.uniform(size=(input_layer_neurons,hidden_layer_neurons))bh=n
+p.random.uniform(size=(1,hidden_layer_neurons))
+wout=np.random.uniform(size=(hidden_layer_neurons,output_neurons)
+bout=np.random.uniform(size=(1,output_neurons))
+for i in 
+range(epoch):hinp1=n
+p.dot(x,wh)hinp=hinp
+1+bh
+hlayer_act=sigmoid(hinp)
+outinp1=np.dot(hlayer_act,wout)ou
+tinp=outinp1+bout
+output=sigmoid(outinp)
+EO=(y-output)
+# back Propagation
+outgrad=derivatives_sigmoid(output)d_
+output=EO*outgrad
+EH=d_output.dot(wout.T)
+hiddengrad=derivatives_sigmoid(hlayer_act)d_h
+iddenlayer=EH*hiddengrad
+#change of weight at each layer
+wout+=hlayer_act.T.dot(d_output)*lr
+bout += np.sum(d_output,axis=0,keepdims=True) 
+*lrwh+=x.T.dot(d_hiddenlayer)*lr
+bh +=np.sum(d_hiddenlayer, axis=0,keepdims=True) 
+*lr#output after each epoch
+#print("-----------Epoch-",i+1,"Starts---------------------------- ")
+#print("Input:\n"+ str(x))
+#print("ActualOutput: \n"+ str(y))
+#print("Predicted Output: \n" ,output)
+##print("Error:\n"+str(EO))
+#print("-----------Epoch-",i+1,"Ends ------------------------- \n")
+print("Actualouput"+str(y))
+print("Predicted 
+Output"+str(output))print("Error"+str(EO)
+)
+
+//Output:
+Actual Output:
+[[0.92]
+[0.86]
+[0.89]]
+Predicted Output:
+[[0.86627165]
+[0.8576674 ]
+[0.86966079]]
+Error:
+[[0.05372835]
+[0.0023326 ]
+[0.02033921]]
+
+
+AIM:Write a program  to do sentiment analysis of livetweets (WEEK-12)
+
+import tweepy
+import pandas as pd
+import numpy as np
+from IPython.display import display
+import matplotlib.pyplot as plt
+import seaborn as sns
+def 
+twit
+ter_
+setu
+p():
+"""
+Utility function to setup the Twitter's 
+APIwith our access keys provided.
+"""
+# Authentication and access using keys:
+auth = tweepy.OAuthHandler("API Key", "API 
+Secret")auth.set_access_token("AccessKey","Acces
+sToken")
+# Return API with authentication:
+api=tweepy.API(auth)
+returnapi
+# We create an extractor object:
+extractor=twitter_setup()
+# We create a tweet list as follows:
+tweets = extractor.user_timeline(screen_name="Username of Twitter account", 
+count=200)print("Numberof tweets extracted:{}.\n".format(len(tweets)))
+# We print the most recent 5 tweets:
+print("13recenttweets:\n")
+for tweet in 
+tweets[:13]:print(t
+weet.text
+)
+print()
+# We create a pandas dataframe as follows:https://t.co/cGS4gdrBYH
+data=pd.DataFrame(data=[tweet.textfortweetintweets],columns=['Tweets'])
+# We display the first 10 elements of the dataframe:
+display(data.head(5))
+Internal methods of a single tweet object:
+print(dir(tweets[0]))
+# We print info from the first tweet:
+print(tweets[0].id)
+print(tweets[0].cre
+ated_at)print(tweet
+s[0].source)
+print(tweets[0].favorite_
+count)print(tweets[0].ret
+weet_count)print(tweets
+[0].geo)
+print(tweets[0].coordinates)print(tweets[0].entities
+# We add relevant data:
+data['len']= np.array([len(tweet.text) for tweet in tweets])data['ID']
+=np.array([tweet.idfortweetintweets])
+data['Date'] = np.array([tweet.created_at for tweet in 
+tweets])data['Source']=np.array([tweet.sourcefortweetintweets])
+data['Likes']= np.array([tweet.favorite_count for tweet in tweets])data['RTs']
+=np.array([tweet.retweet_countfortweetintweets])
+# Display of first 10 elements from dataframe:
+display(data.head(10))
+mean=np.mean(data['len'])
+print("Thelenght'saverageintweets:{}".format(mean))
+# We extract the tweet with more FAVs and more RTs:
+fav_max = 
+np.max(data['Likes'])rt_
+max=np.max(data['RTs'])
+fav = data[data.Likes == 
+fav_max].index[0]rt=data[data.RTs==rt_max].index[0]
+# Max FAVs:
+print("The tweet with more likes is: 
+\n{}".format(data['Tweets'][fav]))print("Numberof likes: {}".format(fav_max))
+print("{}characters.\n".format(data['len'][fav]))
+# Max RTs:
+print("The tweet with more retweets is: 
+\n{}".format(data['Tweets'][rt]))print("Numberof retweets: {}".format(rt_max))
+print("{}characters.\n".format(data['len'][rt]))
+tlen = pd.Series(data=data['len'].values, index=data['Date'])tfav = 
+pd.Series(data=data['Likes'].values, 
+index=data['Date'])tret=pd.Series(data=data['RTs'].values,index=data['Date'])
+# Lenghts along time:
+tlen.plot(figsize=(16,4),color='r');
+tfav.plot(figsize=(16,4),label="Likes",legend=True)
+tret.plot(figsize=(16,4),label="Retweets",legend=True);
+# We obtain all possible sources:
+sources=[]
+forsourceindata['Source']:
+if source not in 
+sources:sour
+ces.append(
+source)
+# We print sources list:
+print("Creationofcontentsources:")
+forsourceinsources:
+print("*{}".format(source))
+# We create a numpy vector mapped to labels:
+percent=np.zeros(len(sources))
+forsourceindata['Source']:
+forindexinrange(len(sources)):
+if source == 
+sources[index]
+:percent[index]
++=1
+pass
+percent/=100
+# Pie chart:
+pie_chart=pd.Series(percent,index=sources,name='Sources')
+pie_chart.plot.pie(fontsize=11,autopct='%.2f',figsize=(6,6));
+fromtextblobimportTextBlob
+importre
+def 
+clean_t
+weet(tw
+eet):
+'''
+Utility function to clean the text in a tweet by removinglinks 
+and special characters using regex.
+'''
+return''.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z\t])|(\w+:\/\/\S+)","",tweet).s
+def 
+analize_sentime
+nt(tweet):
+ '''
+Utility function to classify the polarity of a 
+tweetusing textblob.
+'''
+analysis=TextBlob(clean_tweet(tweet))
+ifanalysis.sentiment.polarity>0:
+return1
+elifanalysis.sentiment.polarity==0:
+return0
+else:
+return-1
+# We create a column with the result of the analysis:
+data['SA']=np.array([analize_sentiment(tweet)fortweetindata['Tweets']])
+# We display the updated dataframe with the new column:
+display(data.head(10))
+# We construct lists with classified tweets:
+pos_tweets = [ tweet for index, tweet in enumerate(data['Tweets']) if data['SA'][index] > 0
+neu_tweets = [ tweet for index, tweet in enumerate(data['Tweets']) if data['SA'][index] == 0
+neg_tweets = [ tweet for index, tweet in enumerate(data['Tweets']) if data['SA'][index] < 0
+print(pos_tweets,neu_tweets, neg_tweets)
+# We print percentages:
+print("Percentage of positive tweets: {}%".format(len(pos_tweets)*100/len(data['Tweets'])))
+print("Percentage of neutral tweets: {}%".format(len(neu_tweets)*100/len(data['Tweets'])))
+print("Percentagedenegativetweets:{}%".format(len(negtweets)*100/len(_data['Tweets'])))_
+                             
+ 
+ 
