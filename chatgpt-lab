@@ -1,0 +1,224 @@
+WEEK1
+Prompt Template: 
+You are conducting an interview for a [Role/Job Title] role. I want you to ask me [Question Difficulty] [Topics/Languages] interview questions. Your response should contain the difficulty rating, but do not give me the answer or any other information. Start by asking me one question.
+Prompt Template: 
+Example Prompt: You are conducting an interview for a senior Front End developer role. I want you to ask me difficult React.js, HTML, CSS, and JavaScript interview questions. Your response should contain the difficulty rating, but do not give me the answer or any other information. Start by asking me one question.
+Prompt Template: 
+
+Example Prompt: Give me another difficult question on a new topic
+
+Example Prompt: Show me the answer
+
+Example Prompt: Can you give me another difficult question about JS?
+
+Example Prompt: Can you give me a more difficult JS question that one was too easy
+
+Example Prompt: Try to give me a harder one
+
+Example Prompt: Can you give me an HTML question about accessibility
+
+Example Prompt: show me the answer
+
+Example Prompt: give me another question
+
+
+WEEK2
+Example Prompt 1: create a physics simulation in java script of container full of gas molecules. The molecules should be simple diatomic helium gas molecules. Also in addition to collision physics also add corrections for van der wals forces and apply distortion to the mechanics of the molecules based on these forces.
+Example Prompt 2: create a simple 2D demonstration of the above in java script to the level of complexity that you can code
+Example Prompt 3: using the mass of the helium nucleus, and the speeds of the gas molecules, have label that outputs the temperature of the box at any instant. Use statistical mechanics to calculate the temperature.
+Example Prompt 4: Update above code to add the label in html below the gas container. To the right of the gas container have a small box that explains the kinetic theory of gases and have the relavent equation below it
+
+week 3
+
+Write Python code for a GPT-2 chatbot using Hugging Face Transformers that maintains context and generates dynamic responses based on user inputs. Create a ChatBot class to handle context updates, use a text-generation pipeline, and generate responses without hardcoded replies. Demonstrate with predefined conversation history showing how the chatbot's responses evolve naturally.
+
+o/p
+from transformers import pipeline
+
+class ChatBot:
+    def init(self, model_name="gpt2", max_history_length=5, max_new_tokens=50):
+        self.generator = pipeline("text-generation", model=model_name)
+        self.max_history_length = max_history_length
+        self.history = ""  # Initialize the history attribute as an empty string
+        self.max_new_tokens = max_new_tokens
+
+    def update_history(self, user_input):
+        # Update the conversation history with user input
+        self.history += f"User: {user_input}\n"
+
+        # Trim the history to maintain the max length
+        history_lines = self.history.split("\n")
+        if len(history_lines) > self.max_history_length:
+            self.history = "\n".join(history_lines[-self.max_history_length :])
+
+    def generate_response(self):
+        # Generate a response based on the conversation history
+        prompt = f"{self.history}Bot:"
+        response = self.generator(prompt, max_new_tokens=self.max_new_tokens, num_return_sequences=1)
+        bot_response = response[0]["generated_text"].split("Bot:")[1].strip()
+
+        # Add bot's response to history
+        self.history += f"Bot: {bot_response}\n"
+        return bot_response
+
+
+# Demonstration with varied conversation
+def demo():
+    # Create an instance of ChatBot
+    chatbot = ChatBot(model_name="gpt2")
+
+    # Simulate a more complex conversation
+    user_inputs = [
+        "Hello, how are you doing today?",
+        "Can you help me with coding?",
+        "What's the weather like in Paris?",
+        "Tell me a story about a dragon.",
+        "Do you think AI will replace humans in the future?",
+        "How do you feel about the concept of time?",
+        "What's your favorite type of music?",
+        "Can you give me some advice on staying productive?"
+    ]
+
+    for user_input in user_inputs:
+        chatbot.update_history(user_input)
+        response = chatbot.generate_response()
+        print(f"User: {user_input}")
+        print(f"Bot: {response}")
+        print("-" * 40)
+
+# Start the demonstration
+demo()
+
+week 4
+
+My Example Prompt:
+create a election banner containing photo of candidate with congress party symbol and background of indian tricolour and add manifesto free bus, free electricity and a quote below candidate "For a better tommorow” with name of candidate"Kunal Devidas Gaikwad" below and social media links below.
+
+
+week5
+
+Prompt 1: Hey, please, provide me the list of the most common customer complaints in online e-commerce shop
+Prompt 2: ChatGPT, generate instructions for yourself that is recommended to follow when dealing with customer complaints about late or delayed delivery. Instructions should provide specific recommendations of how to process the complaint in order to save the customer
+Prompt 3: Keep it short, please. 3-5 bullet points max. Generate the key and the main recommendations for handling late or delayed delivery.
+Example Prompt 4:
+Respond quickly with empathy: "We are sorry for the delay and understand your 
+frustration."
+Provide compensation options: "We would like to offer you a 10%  discount on your next order that you will have the right to use within one year."
+
+only in case a customer is extremely unhappy or threatens you or your  business, and only if they insist on cancelling an order, then you can offer  them a coupon for the amount of purchase that they can use in our shop within the next 3 years.
+
+Prompt 5: Please generate 5 customer complaints related to late or delayed delivery
+prompt 6:123456 is order number
+Prompt 7: So, any update? I'm waiting here!
+Prompt 8: No, I don't want a 10% discount. I want a half price discount or return all my money!
+Prompt 9: I'm not happy with you offer. I don't need this product at all right now!
+Prompt 10: Why you can't process refund? I even didn't receive the delivery
+
+WEEK6
+I'm going to paste a JAVA code; please translate it into python.
+(PASTE THE CODE HERE…)
+Can you please translate the following python code into R?
+
+week 7
+
+Prompt 1: execute python code cleaning 
+Python script that takes a list of numbers and calculates their average. 
+def calculate_average(numbers): 
+total = 0 
+for num in numbers:
+total += num average = total / len(numbers)
+return average nums = [10, 20, 30, 40, 50] 
+avg = calculate_average(nums) 
+print("The average is:", avg)
+
+Prompt 2- do more cleaning
+
+
+week 8
+Prompt 1: Cross-Lingual Conversations
+Prompt 2: Implement this using chatgpt
+Prompt 3: Now consider yourself as translator now whatever language i type convert in english and chinese
+Prompt 4: majha jevan jhala
+code
+pip install googletrans==4.0.0-rc1
+
+
+from googletrans import Translator
+
+
+
+
+
+translator =Translator()
+
+def translate_text(text, dest_language):
+
+  """Translate text to the specified destination language."""
+
+  translated =translator.translate(text, dest_language)
+
+  return translated.text
+
+
+
+conversations= [
+
+{"text": "Hi there! How's your day going?", "lang": "en"},
+
+{"text": "¡Holal Mi día ha sido muy ocupado, pero está bien. ¿Qué has estado haciendo?", "lang": "es"},
+
+{"text": "J'ai travaillé sur un projet important au travail. Et toi, qu'est-ce que tu as fait de plus intéressant aujourd'hui ?", "lang": "fr"},
+
+
+{"text": "Ja, ich habe ein wenig Zeit gefunden, um ein Buch zu lesen. Was machst du normalerweise, um dich zu entspannen?", "lang": "de"}
+
+]
+
+
+
+#Print the conversation
+
+for convo in conversations:
+
+  text =convo["text"]
+
+  lang =convo["lang"]
+
+  print(f"Original ({lang}): {text}")
+
+  if lang != "en":
+
+     translated_text= translate_text(text, "en")
+
+     print(f"Translated to English: {translated_text}")
+
+print()
+
+
+week 9
+
+Prompt 1:
+For the duration of this whole chat I want you to do following:
+-Always generate 2 Images
+-The first image generate with the raw prompt that i will be giving you
+-For the Second image create the most suitable prompt possible
+-Give me image in the landscape format if I don't say otherwise
+
+Let me know if you understand.
+Prompt 2: 
+A US bus from 60s driving on a slim road through the mountains, warm look, sunrise.
+Prompt 3:
+Please analyze the image and describe the art present in the image. Don't describe the exact subjects that are there, describe only the medium and art.
+
+
+week10
+
+Prompt 1: write a survey paper on use of [“TOPIC TITLE”], which includes tables for each algorithm and devices comparison with respect to different aspect, comparison graph for [devices/algorithms] with paragraph descriptions of each authors findings and research gaps and suggest whatever is optimal with respect different scenarios and at the end give 25 reference which has latest SCI journals, IEEE journals, Scopus indexed journals and some scopus indexed conference papers.
+
+Prompt 2: can you add graphs and table comparisons also
+
+Prompt 3: do whatever necessary accordingly and generate graphs and table
+
+Prompt 4: How to optimize this?
+
+Prompt 5: How to reduce latency?
